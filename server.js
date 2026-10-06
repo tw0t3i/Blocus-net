@@ -94,6 +94,19 @@ io.on("connection", (socket) => {
     });
 
 
+// =========================
+// ENVOYER LES ACTUALITÉS
+// =========================
+
+socket.on("get actualites", () => {
+
+    socket.emit(
+        "actualites",
+        actualites
+    );
+
+});
+    
     // =========================
     // REJOINDRE UN SALON
     // =========================
