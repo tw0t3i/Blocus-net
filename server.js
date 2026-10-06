@@ -6,6 +6,12 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+// =========================
+// COMPTEUR DES UTILISATEURS
+// =========================
+
+let utilisateursEnLigne = 0;
+
 // Permet d'utiliser les fichiers du dossier "public"
 app.use(express.static("public"));
 
@@ -62,8 +68,17 @@ const actualites = [
 
 io.on("connection", (socket) => {
 
-    console.log("Quelqu'un vient de se connecter !");
+    utilisateursEnLigne++;
 
+    console.log(
+        "Nouvelle connexion. Utilisateurs en ligne : " +
+        utilisateursEnLigne
+    );
+
+    io.emit(
+        "online count",
+        utilisateursEnLigne
+    );
 
     // =========================
     // CHOIX DU PSEUDO
@@ -261,16 +276,21 @@ socket.on("get actualites", () => {
 
     socket.on("disconnect", () => {
 
-        if (socket.username) {
+    utilisateursEnLigne--;
 
-            console.log(
-                socket.username +
-                " s'est déconnecté."
-            );
+    if (utilisateursEnLigne < 0) {
+        utilisateursEnLigne = 0;
+    }
 
-        }
+    console.log(
+        "Déconnexion. Utilisateurs en ligne : " +
+        utilisateursEnLigne
+    );
 
-    });
+    io.emit(
+        "online count",
+        utilisateursEnLigne
+    );
 
 });
 
