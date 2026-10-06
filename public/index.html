@@ -142,6 +142,25 @@
         font-weight: bold;
     }
 
+   .online-counter {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: #9699a0;
+
+    font-size: 14px;
+}
+
+#onlineCount {
+    color: #ffffff;
+
+    font-weight: bold;
+}
+
     /* =========================
        BARRE LATÉRALE
        ========================= */
@@ -476,13 +495,18 @@
 
     <!-- BARRE DU HAUT -->
 
-    <header class="topbar">
+  <header class="topbar">
 
-        <div class="logo">
-            Blocus.net
-        </div>
+    <div class="logo">
+        Blocus.net
+    </div>
 
-    </header>
+    <div class="online-counter">
+        <span id="onlineCount">0</span>
+        <span>en ligne</span>
+    </div>
+
+</header>
 
 
     <div class="content">
