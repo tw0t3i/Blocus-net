@@ -107,12 +107,15 @@ io.on("connection", (socket) => {
 
         socket.username = username;
 
-        console.log(
-            username + " a rejoint Blocus."
-        );
+utilisateursConnectes.add(username);
 
-    });
-
+console.log(
+    username + " a rejoint Blocus."
+);
+        io.emit(
+    "online users",
+    Array.from(utilisateursConnectes)
+);
 
     // =========================
     // ENVOYER LES ACTUALITÉS
