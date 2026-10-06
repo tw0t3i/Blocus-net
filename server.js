@@ -59,25 +59,28 @@ const actualites = [
 
 
 // =========================
-// COMPTEUR DES UTILISATEURS
+// UTILISATEURS EN LIGNE
 // =========================
 
 let utilisateursEnLigne = 0;
 
 const utilisateursConnectes = new Set();
 
+
 // =========================
-// CONNEXION D'UN UTILISATEUR
+// CONNEXION
 // =========================
 
 io.on("connection", (socket) => {
 
     utilisateursEnLigne++;
 
+
     console.log(
         "Nouvelle connexion. Utilisateurs en ligne : " +
         utilisateursEnLigne
     );
+
 
     io.emit(
         "online count",
@@ -95,27 +98,38 @@ io.on("connection", (socket) => {
             return;
         }
 
+
         username = username.trim();
+
 
         if (username === "") {
             return;
         }
 
+
         if (username.length > 20) {
             username = username.substring(0, 20);
         }
 
+
         socket.username = username;
 
-utilisateursConnectes.add(username);
 
-console.log(
-    username + " a rejoint Blocus."
-);
+        utilisateursConnectes.add(username);
+
+
+        console.log(
+            username + " a rejoint Blocus."
+        );
+
+
         io.emit(
-    "online users",
-    Array.from(utilisateursConnectes)
-);
+            "online users",
+            Array.from(utilisateursConnectes)
+        );
+
+    });
+
 
     // =========================
     // ENVOYER LES ACTUALITÉS
@@ -175,6 +189,7 @@ console.log(
         const historique =
             messagesParSalon[room] || [];
 
+
         socket.emit(
             "room history",
             historique
@@ -209,6 +224,7 @@ console.log(
         if (typeof message !== "string") {
             return;
         }
+
 
         message = message.trim();
 
@@ -270,44 +286,47 @@ console.log(
 
     socket.on("disconnect", () => {
 
-    utilisateursEnLigne--;
-
-    if (utilisateursEnLigne < 0) {
-        utilisateursEnLigne = 0;
-    }
+        utilisateursEnLigne--;
 
 
-    // Retirer le pseudo de la liste
+        if (utilisateursEnLigne < 0) {
+            utilisateursEnLigne = 0;
+        }
 
-    if (socket.username) {
 
-        utilisateursConnectes.delete(
-            socket.username
+        // Retirer le pseudo
+
+        if (socket.username) {
+
+            utilisateursConnectes.delete(
+                socket.username
+            );
+
+        }
+
+
+        console.log(
+            "Déconnexion. Utilisateurs en ligne : " +
+            utilisateursEnLigne
         );
 
-    }
+
+        // Mettre à jour le compteur
+
+        io.emit(
+            "online count",
+            utilisateursEnLigne
+        );
 
 
-    console.log(
-        "Déconnexion. Utilisateurs en ligne : " +
-        utilisateursEnLigne
-    );
+        // Mettre à jour la liste
 
+        io.emit(
+            "online users",
+            Array.from(utilisateursConnectes)
+        );
 
-    // Mettre à jour le compteur
-
-    io.emit(
-        "online count",
-        utilisateursEnLigne
-    );
-
-
-    // Mettre à jour la liste
-
-    io.emit(
-        "online users",
-        Array.from(utilisateursConnectes)
-    );
+    });
 
 });
 
