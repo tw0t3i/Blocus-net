@@ -9,6 +9,7 @@ const io = new Server(server);
 // Permet d'utiliser les fichiers du dossier "public"
 app.use(express.static("public"));
 
+
 // =========================
 // SALONS DISPONIBLES
 // =========================
@@ -20,6 +21,21 @@ const salons = [
     "lycee-c",
     "actualites"
 ];
+
+
+// =========================
+// HISTORIQUE DES MESSAGES
+// =========================
+
+// Les messages sont conservés en mémoire
+// tant que le serveur fonctionne.
+
+const messagesParSalon = {
+    general: [],
+    "lycee-a": [],
+    "lycee-b": [],
+    "lycee-c": []
+};
 
 
 // =========================
@@ -37,9 +53,25 @@ io.on("connection", (socket) => {
 
     socket.on("set username", (username) => {
 
+        if (typeof username !== "string") {
+            return;
+        }
+
+        username = username.trim();
+
+        if (username === "") {
+            return;
+        }
+
+        if (username.length > 20) {
+            username = username.substring(0, 20);
+        }
+
         socket.username = username;
 
-        console.log(username + " a rejoint Blocus.");
+        console.log(
+            username + " a rejoint Blocus."
+        );
 
     });
 
@@ -51,24 +83,49 @@ io.on("connection", (socket) => {
     socket.on("join room", (room) => {
 
         // Vérifier que le salon existe
+
         if (!salons.includes(room)) {
             return;
         }
 
+        // Actualités sera traité séparément
+        // et ne sera pas un salon de discussion.
+
+        if (room === "actualites") {
+            return;
+        }
+
+
         // Quitter l'ancien salon
+
         if (socket.currentRoom) {
             socket.leave(socket.currentRoom);
         }
 
+
         // Rejoindre le nouveau salon
+
         socket.join(room);
 
         socket.currentRoom = room;
+
 
         console.log(
             (socket.username || "Utilisateur") +
             " a rejoint le salon " +
             room
+        );
+
+
+        // Envoyer l'historique du salon
+        // uniquement à la personne qui vient d'arriver
+
+        const historique =
+            messagesParSalon[room] || [];
+
+        socket.emit(
+            "room history",
+            historique
         );
 
     });
@@ -81,36 +138,52 @@ io.on("connection", (socket) => {
     socket.on("chat message", (message) => {
 
         // Vérifier le pseudo
+
         if (!socket.username) {
             return;
         }
 
+
         // Vérifier le salon
+
         if (!socket.currentRoom) {
             return;
         }
 
-        // Vérifier que le message n'est pas vide
+
+        // Empêcher les messages dans Actualités
+
+        if (socket.currentRoom === "actualites") {
+            return;
+        }
+
+
+        // Vérifier le type du message
+
         if (typeof message !== "string") {
             return;
         }
 
         message = message.trim();
 
+
+        // Vérifier que le message n'est pas vide
+
         if (message === "") {
             return;
         }
 
+
         // Limiter la taille du message
+
         if (message.length > 500) {
             message = message.substring(0, 500);
         }
 
 
-        // Envoyer le message uniquement
-        // aux personnes présentes dans le même salon
+        // Créer le message
 
-        io.to(socket.currentRoom).emit("chat message", {
+        const nouveauMessage = {
 
             username: socket.username,
 
@@ -118,7 +191,35 @@ io.on("connection", (socket) => {
 
             room: socket.currentRoom
 
-        });
+        };
+
+
+        // Sauvegarder le message
+
+        messagesParSalon[socket.currentRoom].push(
+            nouveauMessage
+        );
+
+
+        // Limiter l'historique à 200 messages
+        // par salon
+
+        if (
+            messagesParSalon[socket.currentRoom].length > 200
+        ) {
+
+            messagesParSalon[socket.currentRoom].shift();
+
+        }
+
+
+        // Envoyer le message aux personnes
+        // présentes dans le même salon
+
+        io.to(socket.currentRoom).emit(
+            "chat message",
+            nouveauMessage
+        );
 
     });
 
@@ -132,7 +233,8 @@ io.on("connection", (socket) => {
         if (socket.username) {
 
             console.log(
-                socket.username + " s'est déconnecté."
+                socket.username +
+                " s'est déconnecté."
             );
 
         }
