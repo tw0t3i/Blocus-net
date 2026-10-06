@@ -37,6 +37,24 @@ const messagesParSalon = {
     "lycee-c": []
 };
 
+// =========================
+// ACTUALITÉS
+// =========================
+
+const actualites = [
+    {
+        title: "Bienvenue sur Blocus.net",
+        content: "Bienvenue sur Blocus.net. Le site est actuellement en développement.",
+        date: "6 octobre 2026"
+    },
+
+    {
+        title: "Nouveau système de salons",
+        content: "Les salons publics sont maintenant disponibles.",
+        date: "6 octobre 2026"
+    }
+];
+
 
 // =========================
 // CONNEXION D'UN UTILISATEUR
