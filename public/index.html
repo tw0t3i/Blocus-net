@@ -512,6 +512,8 @@
 
             <div id="messages"></div>
 
+            <div id="actualites"></div>
+
 
             <form
                 class="chat-form"
@@ -579,6 +581,9 @@
 
     const messages =
         document.getElementById("messages");
+
+   const actualitesContainer =
+    document.getElementById("actualites");
 
     const roomTitle =
         document.getElementById("roomTitle");
@@ -696,6 +701,21 @@
 
         currentRoom = room;
 
+       if (room === "actualites") {
+
+    messages.style.display = "none";
+
+    actualitesContainer.style.display = "block";
+
+    socket.emit("get actualites");
+
+} else {
+
+    messages.style.display = "block";
+
+    actualitesContainer.style.display = "none";
+
+}
 
         // Informer le serveur
 
@@ -784,7 +804,69 @@
         }
     );
 
+// =========================
+// AFFICHER LES ACTUALITÉS
+// =========================
 
+socket.on("actualites", (posts) => {
+
+    actualitesContainer.innerHTML = "";
+
+    posts.forEach((post) => {
+
+        const postElement =
+            document.createElement("article");
+
+        postElement.classList.add("actualite");
+
+
+        const titleElement =
+            document.createElement("h2");
+
+        titleElement.textContent =
+            post.title;
+
+
+        const contentElement =
+            document.createElement("p");
+
+        contentElement.textContent =
+            post.content;
+
+
+        const dateElement =
+            document.createElement("div");
+
+        dateElement.classList.add(
+            "actualite-date"
+        );
+
+        dateElement.textContent =
+            post.date;
+
+
+        postElement.appendChild(
+            titleElement
+        );
+
+        postElement.appendChild(
+            contentElement
+        );
+
+        postElement.appendChild(
+            dateElement
+        );
+
+
+        actualitesContainer.appendChild(
+            postElement
+        );
+
+    });
+
+});
+
+   
 // =========================
 // AFFICHER UN MESSAGE
 // =========================
