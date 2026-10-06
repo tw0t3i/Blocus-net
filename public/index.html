@@ -161,6 +161,106 @@
     font-weight: bold;
 }
 
+   #onlineButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    background: transparent;
+    color: #9699a0;
+
+    border: none;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+#onlineButton:hover {
+    color: #ffffff;
+}
+
+
+/* =========================
+   PANNEAU DES UTILISATEURS
+   ========================= */
+
+#onlinePanel {
+    position: fixed;
+
+    top: 74px;
+    right: 20px;
+
+    width: 280px;
+
+    background: #18191c;
+
+    border: 1px solid #2b2d31;
+    border-radius: 10px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+
+    z-index: 500;
+
+    display: none;
+}
+
+
+.online-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px;
+
+    border-bottom: 1px solid #2b2d31;
+
+    color: #ffffff;
+
+    font-weight: bold;
+}
+
+
+#closeOnlinePanel {
+    background: transparent;
+
+    border: none;
+
+    color: #9699a0;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+#closeOnlinePanel:hover {
+    color: #ffffff;
+}
+
+
+#onlineUsers {
+    max-height: 300px;
+
+    overflow-y: auto;
+
+    padding: 10px;
+}
+
+
+.online-user {
+    padding: 9px 8px;
+
+    color: #d0d2d6;
+
+    font-size: 14px;
+
+    border-radius: 6px;
+}
+
+.online-user:hover {
+    background: #25272b;
+}
+
     /* =========================
        BARRE LATÉRALE
        ========================= */
