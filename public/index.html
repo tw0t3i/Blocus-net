@@ -788,6 +788,18 @@
    const onlineCount =
     document.getElementById("onlineCount");
 
+   const onlineButton =
+    document.getElementById("onlineButton");
+
+   const onlinePanel =
+    document.getElementById("onlinePanel");
+
+   const closeOnlinePanel =
+    document.getElementById("closeOnlinePanel");
+
+   const onlineUsers =
+    document.getElementById("onlineUsers");
+   
     const roomButtons =
         document.querySelectorAll(".room-button");
 
@@ -1188,6 +1200,83 @@ socket.on("online count", (count) => {
     onlineCount.textContent = count;
 
 });
+
+   // =========================
+// LISTE DES UTILISATEURS
+// =========================
+
+socket.on("online users", (users) => {
+
+    onlineUsers.innerHTML = "";
+
+
+    if (users.length === 0) {
+
+        const emptyMessage =
+            document.createElement("div");
+
+        emptyMessage.classList.add(
+            "online-user"
+        );
+
+        emptyMessage.textContent =
+            "Aucune personne en ligne.";
+
+        onlineUsers.appendChild(
+            emptyMessage
+        );
+
+        return;
+    }
+
+
+    users.forEach((username) => {
+
+        const userElement =
+            document.createElement("div");
+
+        userElement.classList.add(
+            "online-user"
+        );
+
+        userElement.textContent =
+            username;
+
+        onlineUsers.appendChild(
+            userElement
+        );
+
+    });
+
+});
+
+
+// =========================
+// OUVRIR LA LISTE
+// =========================
+
+onlineButton.addEventListener(
+    "click",
+    () => {
+
+        onlinePanel.style.display = "block";
+
+    }
+);
+
+
+// =========================
+// FERMER LA LISTE
+// =========================
+
+closeOnlinePanel.addEventListener(
+    "click",
+    () => {
+
+        onlinePanel.style.display = "none";
+
+    }
+);
 
    
 </script>
