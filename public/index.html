@@ -1,350 +1,900 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blocus.net</title>
 
-    <title>Blocus Chat</title>
+<style>
 
-    <style>
+    * {
+        box-sizing: border-box;
+    }
 
-        /* =========================
-           APPARENCE DU SITE
-           ========================= */
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #111214;
+        color: #e8e8e8;
+    }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
+    /* =========================
+       NAVIGATION
+       ========================= */
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 64px;
+
+        background: #18191c;
+        border-bottom: 1px solid #2b2d31;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 24px;
+
+        z-index: 100;
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .nav-button {
+        background: transparent;
+        border: none;
+        color: #aeb1b7;
+
+        padding: 10px 14px;
+        border-radius: 6px;
+
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .nav-button:hover {
+        background: #25272b;
+        color: #ffffff;
+    }
+
+    .nav-button.active {
+        background: #2b2e34;
+        color: #ffffff;
+    }
+
+    /* =========================
+       CONTENU PRINCIPAL
+       ========================= */
+
+    .page {
+        width: 100%;
+        max-width: 900px;
+
+        margin: 0 auto;
+        padding: 90px 20px 40px;
+    }
+
+    .section {
+        display: none;
+    }
+
+    .section.active {
+        display: block;
+    }
+
+    .section-title {
+        margin: 0 0 20px;
+        font-size: 26px;
+        color: #ffffff;
+    }
+
+    /* =========================
+       ACCUEIL
+       ========================= */
+
+    .welcome {
+        background: #18191c;
+        border: 1px solid #2b2d31;
+        border-radius: 10px;
+
+        padding: 24px;
+        margin-bottom: 20px;
+    }
+
+    .welcome h2 {
+        margin: 0 0 8px;
+        color: #ffffff;
+    }
+
+    .welcome p {
+        margin: 0;
+        color: #aeb1b7;
+    }
+
+    /* =========================
+       PUBLICATION
+       ========================= */
+
+    .post-box {
+        background: #18191c;
+        border: 1px solid #2b2d31;
+        border-radius: 10px;
+
+        padding: 18px;
+        margin-bottom: 20px;
+    }
+
+    .post-box textarea {
+        width: 100%;
+        min-height: 90px;
+
+        resize: vertical;
+
+        background: #111214;
+        color: #ffffff;
+
+        border: 1px solid #303238;
+        border-radius: 7px;
+
+        padding: 12px;
+
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+
+        outline: none;
+    }
+
+    .post-box textarea:focus {
+        border-color: #555963;
+    }
+
+    .post-button {
+        margin-top: 10px;
+
+        background: #ffffff;
+        color: #111214;
+
+        border: none;
+        border-radius: 7px;
+
+        padding: 10px 18px;
+
+        font-size: 15px;
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+
+    .post-button:hover {
+        background: #dcdcdc;
+    }
+
+    /* =========================
+       PUBLICATIONS
+       ========================= */
+
+    .post {
+        background: #18191c;
+        border: 1px solid #2b2d31;
+        border-radius: 10px;
+
+        padding: 18px;
+        margin-bottom: 15px;
+    }
+
+    .post-author {
+        font-weight: bold;
+        color: #ffffff;
+
+        margin-bottom: 8px;
+    }
+
+    .post-content {
+        color: #d0d2d6;
+        line-height: 1.5;
+
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .post-actions {
+        margin-top: 15px;
+        padding-top: 12px;
+
+        border-top: 1px solid #2b2d31;
+    }
+
+    .post-action {
+        background: transparent;
+        border: none;
+
+        color: #8f9299;
+
+        cursor: pointer;
+        font-size: 14px;
+
+        padding: 5px 0;
+    }
+
+    .post-action:hover {
+        color: #ffffff;
+    }
+
+    /* =========================
+       CHAT
+       ========================= */
+
+    .chat-container {
+        height: calc(100vh - 130px);
+
+        background: #18191c;
+        border: 1px solid #2b2d31;
+        border-radius: 10px;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    #messages {
+        flex: 1;
+        overflow-y: auto;
+
+        padding: 20px;
+    }
+
+    .message {
+        background: #222428;
+
+        padding: 10px 12px;
+        margin-bottom: 10px;
+
+        border-radius: 7px;
+    }
+
+    .username {
+        font-weight: bold;
+        color: #ffffff;
+
+        margin-bottom: 5px;
+    }
+
+    .message-text {
+        color: #d0d2d6;
+        word-break: break-word;
+    }
+
+    .chat-form {
+        display: flex;
+
+        padding: 15px;
+
+        border-top: 1px solid #2b2d31;
+        gap: 10px;
+    }
+
+    #messageInput {
+        flex: 1;
+
+        background: #111214;
+        color: #ffffff;
+
+        border: 1px solid #303238;
+        border-radius: 7px;
+
+        padding: 12px;
+
+        font-size: 15px;
+        outline: none;
+    }
+
+    #messageInput:focus {
+        border-color: #555963;
+    }
+
+    .send-button {
+        background: #ffffff;
+        color: #111214;
+
+        border: none;
+        border-radius: 7px;
+
+        padding: 0 20px;
+
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .send-button:hover {
+        background: #dcdcdc;
+    }
+
+    /* =========================
+       PROFIL
+       ========================= */
+
+    .profile-card {
+        background: #18191c;
+        border: 1px solid #2b2d31;
+        border-radius: 10px;
+
+        padding: 25px;
+    }
+
+    .profile-name {
+        font-size: 24px;
+        font-weight: bold;
+
+        color: #ffffff;
+
+        margin-bottom: 8px;
+    }
+
+    .profile-info {
+        color: #9699a0;
+    }
+
+    /* =========================
+       CONNEXION
+       ========================= */
+
+    #login {
+        position: fixed;
+        inset: 0;
+
+        background: #111214;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        z-index: 1000;
+    }
+
+    .login-box {
+        width: 340px;
+
+        background: #18191c;
+        border: 1px solid #2b2d31;
+
+        border-radius: 12px;
+
+        padding: 30px;
+
+        text-align: center;
+    }
+
+    .login-box h1 {
+        margin: 0 0 8px;
+
+        color: #ffffff;
+        font-size: 26px;
+    }
+
+    .login-box p {
+        color: #9699a0;
+        margin-bottom: 20px;
+    }
+
+    #usernameInput {
+        width: 100%;
+
+        background: #111214;
+        color: #ffffff;
+
+        border: 1px solid #303238;
+        border-radius: 7px;
+
+        padding: 12px;
+
+        font-size: 15px;
+        outline: none;
+
+        margin-bottom: 10px;
+    }
+
+    #usernameInput:focus {
+        border-color: #555963;
+    }
+
+    #loginButton {
+        width: 100%;
+
+        background: #ffffff;
+        color: #111214;
+
+        border: none;
+        border-radius: 7px;
+
+        padding: 12px;
+
+        font-size: 15px;
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+
+    #loginButton:hover {
+        background: #dcdcdc;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 600px) {
+
+        .navbar {
+            padding: 0 12px;
         }
 
-        .chat {
-            width: 100%;
-            max-width: 700px;
-            height: 100vh;
-            margin: auto;
-            background: white;
-            display: flex;
-            flex-direction: column;
+        .logo {
+            font-size: 18px;
         }
 
-        /* En-tête */
-
-        .header {
-            background: #2F3234;
-            color: white;
-            padding: 20px;
-            text-align: center;
+        .nav-button {
+            padding: 9px;
+            font-size: 13px;
         }
 
-        .header h1 {
-            margin: 0;
+        .page {
+            padding-left: 10px;
+            padding-right: 10px;
         }
 
-        /* Zone des messages */
-
-        #messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
+        .chat-container {
+            height: calc(100vh - 110px);
         }
 
-        .message {
-            background: #eeeeee;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-        }
+    }
 
-        .username {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        /* Zone d'écriture */
-
-        .form {
-            display: flex;
-            padding: 15px;
-            border-top: 1px solid #ddd;
-            gap: 10px;
-        }
-
-        #messageInput {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            background: #2F3234;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background: #000000;
-        }
-
-        /* Écran de connexion */
-
-        #login {
-            position: fixed;
-            inset: 0;
-            background: #2F3234;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-box {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 300px;
-            text-align: center;
-        }
-
-        .login-box h2 {
-            margin-top: 0;
-        }
-
-        #usernameInput {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        #loginButton {
-            width: 100%;
-        }
-
-        /* Le chat est caché au départ */
-
-        #chat {
-            display: none;
-        }
-
-    </style>
+</style>
+```
 
 </head>
 
 <body>
 
+```
+<!-- =========================
+     CONNEXION
+     ========================= -->
 
-    <!-- =========================
-         ÉCRAN DU PSEUDO
-         ========================= -->
+<div id="login">
 
-    <div id="login">
+    <div class="login-box">
 
-        <div class="login-box">
+        <h1>Blocus.net</h1>
 
-            <h2>Blocus.net</h2>
+        <p>Choisis ton pseudo pour continuer.</p>
 
-            <p>Choisis ton pseudo</p>
+        <input
+            id="usernameInput"
+            type="text"
+            placeholder="Ton pseudo"
+            maxlength="20"
+            autocomplete="off"
+        >
 
-            <input
-                id="usernameInput"
-                type="text"
-                placeholder="Ton pseudo..."
-                maxlength="20"
-                autocomplete="off"
-            >
+        <button id="loginButton">
+            Entrer
+        </button>
 
-            <button id="loginButton">
-                Entrer
+    </div>
+
+</div>
+
+
+<!-- =========================
+     NAVIGATION
+     ========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        Blocus.net
+    </div>
+
+    <div class="nav-links">
+
+        <button class="nav-button active" data-section="home">
+            Accueil
+        </button>
+
+        <button class="nav-button" data-section="chat">
+            Chat
+        </button>
+
+        <button class="nav-button" data-section="profile">
+            Profil
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     CONTENU
+     ========================= -->
+
+<main class="page">
+
+
+    <!-- ACCUEIL -->
+
+    <section id="home" class="section active">
+
+        <h1 class="section-title">
+            Accueil
+        </h1>
+
+        <div class="welcome">
+
+            <h2>
+                Bienvenue sur Blocus.net
+            </h2>
+
+            <p>
+                Le réseau social de Blocus.
+            </p>
+
+        </div>
+
+
+        <div class="post-box">
+
+            <textarea
+                id="postInput"
+                maxlength="1000"
+                placeholder="Quoi de neuf ?"
+            ></textarea>
+
+            <button class="post-button" id="postButton">
+                Publier
             </button>
 
         </div>
 
-    </div>
 
-
-    <!-- =========================
-         CHAT
-         ========================= -->
-
-    <div class="chat" id="chat">
-
-        <div class="header">
-
-            <h1>Blocus.net</h1>
+        <div id="posts">
 
         </div>
 
-
-        <div id="messages"></div>
-
-
-        <form class="form" id="form">
-
-            <input
-                id="messageInput"
-                type="text"
-                placeholder="Écris un message..."
-                autocomplete="off"
-            >
-
-            <button type="submit">
-                Envoyer
-            </button>
-
-        </form>
-
-    </div>
+    </section>
 
 
-    <!-- Socket.IO -->
+    <!-- CHAT -->
 
-    <script src="/socket.io/socket.io.js"></script>
+    <section id="chat" class="section">
 
+        <h1 class="section-title">
+            Chat
+        </h1>
 
-    <script>
+        <div class="chat-container">
 
-        // Connexion au serveur
-        const socket = io();
+            <div id="messages"></div>
 
+            <form class="chat-form" id="form">
 
-        // Éléments du pseudo
+                <input
+                    id="messageInput"
+                    type="text"
+                    placeholder="Écris un message..."
+                    autocomplete="off"
+                >
 
-        const login = document.getElementById("login");
-        const usernameInput = document.getElementById("usernameInput");
-        const loginButton = document.getElementById("loginButton");
+                <button class="send-button" type="submit">
+                    Envoyer
+                </button>
 
+            </form>
 
-        // Éléments du chat
+        </div>
 
-        const chat = document.getElementById("chat");
-        const form = document.getElementById("form");
-        const input = document.getElementById("messageInput");
-        const messages = document.getElementById("messages");
-
-
-        // =========================
-        // CHOISIR SON PSEUDO
-        // =========================
-
-        loginButton.addEventListener("click", () => {
-
-            const username = usernameInput.value.trim();
+    </section>
 
 
-            // Vérifier que le pseudo n'est pas vide
+    <!-- PROFIL -->
 
-            if (username === "") {
-                alert("Choisis un pseudo !");
-                return;
-            }
+    <section id="profile" class="section">
+
+        <h1 class="section-title">
+            Profil
+        </h1>
+
+        <div class="profile-card">
+
+            <div class="profile-name" id="profileName">
+                Utilisateur
+            </div>
+
+            <div class="profile-info">
+                Profil Blocus.net
+            </div>
+
+        </div>
+
+    </section>
 
 
-            // Envoyer le pseudo au serveur
-
-            socket.emit("set username", username);
+</main>
 
 
-            // Cacher l'écran du pseudo
+<!-- Socket.IO -->
 
-            login.style.display = "none";
-
-
-            // Afficher le chat
-
-            chat.style.display = "flex";
+<script src="/socket.io/socket.io.js"></script>
 
 
-            // Mettre directement le curseur dans la zone de message
+<script>
 
-            input.focus();
+    // =========================
+    // CONNEXION SOCKET.IO
+    // =========================
+
+    const socket = io();
+
+
+    // =========================
+    // ÉLÉMENTS
+    // =========================
+
+    const login = document.getElementById("login");
+
+    const usernameInput = document.getElementById("usernameInput");
+
+    const loginButton = document.getElementById("loginButton");
+
+    const profileName = document.getElementById("profileName");
+
+    const form = document.getElementById("form");
+
+    const messageInput = document.getElementById("messageInput");
+
+    const messages = document.getElementById("messages");
+
+    const postInput = document.getElementById("postInput");
+
+    const postButton = document.getElementById("postButton");
+
+    const posts = document.getElementById("posts");
+
+
+    let username = "";
+
+
+    // =========================
+    // CONNEXION
+    // =========================
+
+    loginButton.addEventListener("click", () => {
+
+        const value = usernameInput.value.trim();
+
+        if (value === "") {
+
+            alert("Choisis un pseudo.");
+
+            return;
+
+        }
+
+        username = value;
+
+        socket.emit("set username", username);
+
+        profileName.textContent = username;
+
+        login.style.display = "none";
+
+        messageInput.focus();
+
+    });
+
+
+    usernameInput.addEventListener("keydown", (event) => {
+
+        if (event.key === "Enter") {
+
+            loginButton.click();
+
+        }
+
+    });
+
+
+    // =========================
+    // NAVIGATION
+    // =========================
+
+    const navButtons = document.querySelectorAll(".nav-button");
+
+    const sections = document.querySelectorAll(".section");
+
+
+    navButtons.forEach((button) => {
+
+        button.addEventListener("click", () => {
+
+            const target = button.dataset.section;
+
+
+            navButtons.forEach((item) => {
+
+                item.classList.remove("active");
+
+            });
+
+
+            sections.forEach((section) => {
+
+                section.classList.remove("active");
+
+            });
+
+
+            button.classList.add("active");
+
+            document.getElementById(target).classList.add("active");
+
+        });
+
+    });
+
+
+    // =========================
+    // CHAT
+    // =========================
+
+    form.addEventListener("submit", (event) => {
+
+        event.preventDefault();
+
+
+        const message = messageInput.value.trim();
+
+
+        if (message !== "") {
+
+            socket.emit("chat message", message);
+
+            messageInput.value = "";
+
+        }
+
+    });
+
+
+    socket.on("chat message", (data) => {
+
+        const messageElement = document.createElement("div");
+
+        messageElement.classList.add("message");
+
+
+        const usernameElement = document.createElement("div");
+
+        usernameElement.classList.add("username");
+
+        usernameElement.textContent = data.username;
+
+
+        const textElement = document.createElement("div");
+
+        textElement.classList.add("message-text");
+
+        textElement.textContent = data.message;
+
+
+        messageElement.appendChild(usernameElement);
+
+        messageElement.appendChild(textElement);
+
+
+        messages.appendChild(messageElement);
+
+
+        messages.scrollTop = messages.scrollHeight;
+
+    });
+
+
+    // =========================
+    // PUBLICATIONS
+    // =========================
+
+    postButton.addEventListener("click", () => {
+
+        const content = postInput.value.trim();
+
+
+        if (content === "") {
+
+            return;
+
+        }
+
+
+        const post = document.createElement("div");
+
+        post.classList.add("post");
+
+
+        const author = document.createElement("div");
+
+        author.classList.add("post-author");
+
+        author.textContent = username;
+
+
+        const text = document.createElement("div");
+
+        text.classList.add("post-content");
+
+        text.textContent = content;
+
+
+        const actions = document.createElement("div");
+
+        actions.classList.add("post-actions");
+
+
+        const likeButton = document.createElement("button");
+
+        likeButton.classList.add("post-action");
+
+        likeButton.textContent = "J'aime";
+
+
+        let liked = false;
+
+
+        likeButton.addEventListener("click", () => {
+
+            liked = !liked;
+
+            likeButton.textContent = liked ? "Je n'aime plus" : "J'aime";
 
         });
 
 
-        // Permettre d'appuyer sur Entrée pour choisir son pseudo
-
-        usernameInput.addEventListener("keydown", (event) => {
-
-            if (event.key === "Enter") {
-                loginButton.click();
-            }
-
-        });
+        actions.appendChild(likeButton);
 
 
-        // =========================
-        // ENVOYER UN MESSAGE
-        // =========================
+        post.appendChild(author);
 
-        form.addEventListener("submit", (event) => {
+        post.appendChild(text);
 
-            event.preventDefault();
+        post.appendChild(actions);
 
 
-            const message = input.value.trim();
+        posts.prepend(post);
 
 
-            if (message !== "") {
+        postInput.value = "";
 
-                socket.emit("chat message", message);
-
-                input.value = "";
-
-            }
-
-        });
+    });
 
 
-        // =========================
-        // RECEVOIR UN MESSAGE
-        // =========================
-
-        socket.on("chat message", (data) => {
-
-            const messageElement = document.createElement("div");
-
-            messageElement.classList.add("message");
-
-
-            const usernameElement = document.createElement("div");
-
-            usernameElement.classList.add("username");
-
-            usernameElement.textContent = data.username;
-
-
-            const textElement = document.createElement("div");
-
-            textElement.textContent = data.message;
-
-
-            messageElement.appendChild(usernameElement);
-
-            messageElement.appendChild(textElement);
-
-
-            messages.appendChild(messageElement);
-
-
-            // Descendre automatiquement
-
-            messages.scrollTop = messages.scrollHeight;
-
-        });
-
-    </script>
+</script>
+```
 
 </body>
 
