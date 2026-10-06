@@ -6,13 +6,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+
 // =========================
-// COMPTEUR DES UTILISATEURS
+// FICHIERS PUBLICS
 // =========================
 
-let utilisateursEnLigne = 0;
-
-// Permet d'utiliser les fichiers du dossier "public"
 app.use(express.static("public"));
 
 
@@ -33,15 +31,13 @@ const salons = [
 // HISTORIQUE DES MESSAGES
 // =========================
 
-// Les messages sont conservés en mémoire
-// tant que le serveur fonctionne.
-
 const messagesParSalon = {
     general: [],
     "lycee-a": [],
     "lycee-b": [],
     "lycee-c": []
 };
+
 
 // =========================
 // ACTUALITÉS
@@ -63,6 +59,13 @@ const actualites = [
 
 
 // =========================
+// COMPTEUR DES UTILISATEURS
+// =========================
+
+let utilisateursEnLigne = 0;
+
+
+// =========================
 // CONNEXION D'UN UTILISATEUR
 // =========================
 
@@ -79,6 +82,7 @@ io.on("connection", (socket) => {
         "online count",
         utilisateursEnLigne
     );
+
 
     // =========================
     // CHOIX DU PSEUDO
@@ -109,33 +113,32 @@ io.on("connection", (socket) => {
     });
 
 
-// =========================
-// ENVOYER LES ACTUALITÉS
-// =========================
+    // =========================
+    // ENVOYER LES ACTUALITÉS
+    // =========================
 
-socket.on("get actualites", () => {
+    socket.on("get actualites", () => {
 
-    socket.emit(
-        "actualites",
-        actualites
-    );
+        socket.emit(
+            "actualites",
+            actualites
+        );
 
-});
-    
+    });
+
+
     // =========================
     // REJOINDRE UN SALON
     // =========================
 
     socket.on("join room", (room) => {
 
-        // Vérifier que le salon existe
-
         if (!salons.includes(room)) {
             return;
         }
 
-        // Actualités sera traité séparément
-        // et ne sera pas un salon de discussion.
+
+        // Actualités n'est pas un salon de discussion
 
         if (room === "actualites") {
             return;
@@ -163,8 +166,7 @@ socket.on("get actualites", () => {
         );
 
 
-        // Envoyer l'historique du salon
-        // uniquement à la personne qui vient d'arriver
+        // Envoyer l'historique
 
         const historique =
             messagesParSalon[room] || [];
@@ -183,14 +185,10 @@ socket.on("get actualites", () => {
 
     socket.on("chat message", (message) => {
 
-        // Vérifier le pseudo
-
         if (!socket.username) {
             return;
         }
 
-
-        // Vérifier le salon
 
         if (!socket.currentRoom) {
             return;
@@ -204,8 +202,6 @@ socket.on("get actualites", () => {
         }
 
 
-        // Vérifier le type du message
-
         if (typeof message !== "string") {
             return;
         }
@@ -213,14 +209,10 @@ socket.on("get actualites", () => {
         message = message.trim();
 
 
-        // Vérifier que le message n'est pas vide
-
         if (message === "") {
             return;
         }
 
-
-        // Limiter la taille du message
 
         if (message.length > 500) {
             message = message.substring(0, 500);
@@ -247,8 +239,7 @@ socket.on("get actualites", () => {
         );
 
 
-        // Limiter l'historique à 200 messages
-        // par salon
+        // Maximum 200 messages par salon
 
         if (
             messagesParSalon[socket.currentRoom].length > 200
@@ -259,8 +250,7 @@ socket.on("get actualites", () => {
         }
 
 
-        // Envoyer le message aux personnes
-        // présentes dans le même salon
+        // Envoyer le message aux utilisateurs du salon
 
         io.to(socket.currentRoom).emit(
             "chat message",
@@ -276,21 +266,25 @@ socket.on("get actualites", () => {
 
     socket.on("disconnect", () => {
 
-    utilisateursEnLigne--;
+        utilisateursEnLigne--;
 
-    if (utilisateursEnLigne < 0) {
-        utilisateursEnLigne = 0;
-    }
+        if (utilisateursEnLigne < 0) {
+            utilisateursEnLigne = 0;
+        }
 
-    console.log(
-        "Déconnexion. Utilisateurs en ligne : " +
-        utilisateursEnLigne
-    );
 
-    io.emit(
-        "online count",
-        utilisateursEnLigne
-    );
+        console.log(
+            "Déconnexion. Utilisateurs en ligne : " +
+            utilisateursEnLigne
+        );
+
+
+        io.emit(
+            "online count",
+            utilisateursEnLigne
+        );
+
+    });
 
 });
 
@@ -300,6 +294,7 @@ socket.on("get actualites", () => {
 // =========================
 
 const PORT = process.env.PORT || 3000;
+
 
 server.listen(PORT, "0.0.0.0", () => {
 
