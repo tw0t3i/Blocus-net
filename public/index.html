@@ -670,6 +670,9 @@
     const roomTitle =
         document.getElementById("roomTitle");
 
+   const onlineCount =
+    document.getElementById("onlineCount");
+
     const roomButtons =
         document.querySelectorAll(".room-button");
 
@@ -1061,6 +1064,17 @@ socket.on(
     }
 );
 
+// =========================
+// UTILISATEURS EN LIGNE
+// =========================
+
+socket.on("online count", (count) => {
+
+    onlineCount.textContent = count;
+
+});
+
+   
 </script>
 ```
 
