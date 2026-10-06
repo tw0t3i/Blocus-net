@@ -785,76 +785,117 @@
     );
 
 
-    // =========================
-    // RECEVOIR UN MESSAGE
-    // =========================
+// =========================
+// AFFICHER UN MESSAGE
+// =========================
 
-    socket.on(
-        "chat message",
-        (data) => {
+function afficherMessage(data) {
+
+    const messageElement =
+        document.createElement("div");
+
+    messageElement.classList.add(
+        "message"
+    );
 
 
-            // Ne pas afficher un message
-            // d'un autre salon
+    const usernameElement =
+        document.createElement("div");
 
-            if (data.room !== currentRoom) {
+    usernameElement.classList.add(
+        "username"
+    );
 
-                return;
+    usernameElement.textContent =
+        data.username;
+
+
+    const textElement =
+        document.createElement("div");
+
+    textElement.classList.add(
+        "message-text"
+    );
+
+    textElement.textContent =
+        data.message;
+
+
+    messageElement.appendChild(
+        usernameElement
+    );
+
+    messageElement.appendChild(
+        textElement
+    );
+
+
+    messages.appendChild(
+        messageElement
+    );
+
+}
+
+
+// =========================
+// HISTORIQUE D'UN SALON
+// =========================
+
+socket.on(
+    "room history",
+    (history) => {
+
+        // Vider les messages affichés
+
+        messages.innerHTML = "";
+
+
+        // Afficher tous les anciens messages
+
+        history.forEach(
+            (message) => {
+
+                afficherMessage(message);
 
             }
+        );
 
 
-            const messageElement =
-                document.createElement("div");
+        // Aller directement en bas
 
-            messageElement.classList.add(
-                "message"
-            );
+        messages.scrollTop =
+            messages.scrollHeight;
 
-
-            const usernameElement =
-                document.createElement("div");
-
-            usernameElement.classList.add(
-                "username"
-            );
-
-            usernameElement.textContent =
-                data.username;
+    }
+);
 
 
-            const textElement =
-                document.createElement("div");
+// =========================
+// NOUVEAU MESSAGE
+// =========================
 
-            textElement.classList.add(
-                "message-text"
-            );
+socket.on(
+    "chat message",
+    (data) => {
 
-            textElement.textContent =
-                data.message;
+        // Ne pas afficher un message
+        // provenant d'un autre salon
 
-
-            messageElement.appendChild(
-                usernameElement
-            );
-
-            messageElement.appendChild(
-                textElement
-            );
-
-
-            messages.appendChild(
-                messageElement
-            );
-
-
-            // Descendre automatiquement
-
-            messages.scrollTop =
-                messages.scrollHeight;
-
+        if (data.room !== currentRoom) {
+            return;
         }
-    );
+
+
+        afficherMessage(data);
+
+
+        // Descendre automatiquement
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+    }
+);
 
 </script>
 ```
