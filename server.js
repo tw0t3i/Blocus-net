@@ -64,6 +64,7 @@ const actualites = [
 
 let utilisateursEnLigne = 0;
 
+const utilisateursConnectes = new Set();
 
 // =========================
 // CONNEXION D'UN UTILISATEUR
