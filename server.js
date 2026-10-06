@@ -270,25 +270,44 @@ console.log(
 
     socket.on("disconnect", () => {
 
-        utilisateursEnLigne--;
+    utilisateursEnLigne--;
 
-        if (utilisateursEnLigne < 0) {
-            utilisateursEnLigne = 0;
-        }
+    if (utilisateursEnLigne < 0) {
+        utilisateursEnLigne = 0;
+    }
 
 
-        console.log(
-            "Déconnexion. Utilisateurs en ligne : " +
-            utilisateursEnLigne
+    // Retirer le pseudo de la liste
+
+    if (socket.username) {
+
+        utilisateursConnectes.delete(
+            socket.username
         );
 
+    }
 
-        io.emit(
-            "online count",
-            utilisateursEnLigne
-        );
 
-    });
+    console.log(
+        "Déconnexion. Utilisateurs en ligne : " +
+        utilisateursEnLigne
+    );
+
+
+    // Mettre à jour le compteur
+
+    io.emit(
+        "online count",
+        utilisateursEnLigne
+    );
+
+
+    // Mettre à jour la liste
+
+    io.emit(
+        "online users",
+        Array.from(utilisateursConnectes)
+    );
 
 });
 
