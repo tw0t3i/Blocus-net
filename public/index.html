@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blocus Chat</title>
+
+    <style>
+
+        /* =========================
+           APPARENCE DU SITE
+           ========================= */
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+
+        .chat {
+            width: 100%;
+            max-width: 700px;
+            height: 100vh;
+            margin: auto;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* En-tête */
+
+        .header {
+            background: #2F3234;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        /* Zone des messages */
+
+        #messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            background: #eeeeee;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .username {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Zone d'écriture */
+
+        .form {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            gap: 10px;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #2F3234;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #000000;
+        }
+
+        /* Écran de connexion */
+
+        #login {
+            position: fixed;
+            inset: 0;
+            background: #2F3234;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-top: 0;
+        }
+
+        #usernameInput {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        #loginButton {
+            width: 100%;
+        }
+
+        /* Le chat est caché au départ */
+
+        #chat {
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- =========================
+         ÉCRAN DU PSEUDO
+         ========================= -->
+
+    <div id="login">
+
+        <div class="login-box">
+
+            <h2>Blocus.net</h2>
+
+            <p>Choisis ton pseudo</p>
+
+            <input
+                id="usernameInput"
+                type="text"
+                placeholder="Ton pseudo..."
+                maxlength="20"
+                autocomplete="off"
+            >
+
+            <button id="loginButton">
+                Entrer
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CHAT
+         ========================= -->
+
+    <div class="chat" id="chat">
+
+        <div class="header">
+
+            <h1>Blocus.net</h1>
+
+        </div>
+
+
+        <div id="messages"></div>
+
+
+        <form class="form" id="form">
+
+            <input
+                id="messageInput"
+                type="text"
+                placeholder="Écris un message..."
+                autocomplete="off"
+            >
+
+            <button type="submit">
+                Envoyer
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Socket.IO -->
+
+    <script src="/socket.io/socket.io.js"></script>
+
+
+    <script>
+
+        // Connexion au serveur
+        const socket = io();
+
+
+        // Éléments du pseudo
+
+        const login = document.getElementById("login");
+        const usernameInput = document.getElementById("usernameInput");
+        const loginButton = document.getElementById("loginButton");
+
+
+        // Éléments du chat
+
+        const chat = document.getElementById("chat");
+        const form = document.getElementById("form");
+        const input = document.getElementById("messageInput");
+        const messages = document.getElementById("messages");
+
+
+        // =========================
+        // CHOISIR SON PSEUDO
+        // =========================
+
+        loginButton.addEventListener("click", () => {
+
+            const username = usernameInput.value.trim();
+
+
+            // Vérifier que le pseudo n'est pas vide
+
+            if (username === "") {
+                alert("Choisis un pseudo !");
+                return;
+            }
+
+
+            // Envoyer le pseudo au serveur
+
+            socket.emit("set username", username);
+
+
+            // Cacher l'écran du pseudo
+
+            login.style.display = "none";
+
+
+            // Afficher le chat
+
+            chat.style.display = "flex";
+
+
+            // Mettre directement le curseur dans la zone de message
+
+            input.focus();
+
+        });
+
+
+        // Permettre d'appuyer sur Entrée pour choisir son pseudo
+
+        usernameInput.addEventListener("keydown", (event) => {
+
+            if (event.key === "Enter") {
+                loginButton.click();
+            }
+
+        });
+
+
+        // =========================
+        // ENVOYER UN MESSAGE
+        // =========================
+
+        form.addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+
+            const message = input.value.trim();
+
+
+            if (message !== "") {
+
+                socket.emit("chat message", message);
+
+                input.value = "";
+
+            }
+
+        });
+
+
+        // =========================
+        // RECEVOIR UN MESSAGE
+        // =========================
+
+        socket.on("chat message", (data) => {
+
+            const messageElement = document.createElement("div");
+
+            messageElement.classList.add("message");
+
+
+            const usernameElement = document.createElement("div");
+
+            usernameElement.classList.add("username");
+
+            usernameElement.textContent = data.username;
+
+
+            const textElement = document.createElement("div");
+
+            textElement.textContent = data.message;
+
+
+            messageElement.appendChild(usernameElement);
+
+            messageElement.appendChild(textElement);
+
+
+            messages.appendChild(messageElement);
+
+
+            // Descendre automatiquement
+
+            messages.scrollTop = messages.scrollHeight;
+
+        });
+
+    </script>
+
+</body>
+
+</html>
