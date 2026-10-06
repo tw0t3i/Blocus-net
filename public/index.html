@@ -21,333 +21,7 @@
         font-family: Arial, sans-serif;
         background: #111214;
         color: #e8e8e8;
-    }
-
-    /* =========================
-       NAVIGATION
-       ========================= */
-
-    .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 64px;
-
-        background: #18191c;
-        border-bottom: 1px solid #2b2d31;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        padding: 0 24px;
-
-        z-index: 100;
-    }
-
-    .logo {
-        font-size: 22px;
-        font-weight: bold;
-        color: #ffffff;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 8px;
-    }
-
-    .nav-button {
-        background: transparent;
-        border: none;
-        color: #aeb1b7;
-
-        padding: 10px 14px;
-        border-radius: 6px;
-
-        cursor: pointer;
-        font-size: 15px;
-    }
-
-    .nav-button:hover {
-        background: #25272b;
-        color: #ffffff;
-    }
-
-    .nav-button.active {
-        background: #2b2e34;
-        color: #ffffff;
-    }
-
-    /* =========================
-       CONTENU PRINCIPAL
-       ========================= */
-
-    .page {
-        width: 100%;
-        max-width: 900px;
-
-        margin: 0 auto;
-        padding: 90px 20px 40px;
-    }
-
-    .section {
-        display: none;
-    }
-
-    .section.active {
-        display: block;
-    }
-
-    .section-title {
-        margin: 0 0 20px;
-        font-size: 26px;
-        color: #ffffff;
-    }
-
-    /* =========================
-       ACCUEIL
-       ========================= */
-
-    .welcome {
-        background: #18191c;
-        border: 1px solid #2b2d31;
-        border-radius: 10px;
-
-        padding: 24px;
-        margin-bottom: 20px;
-    }
-
-    .welcome h2 {
-        margin: 0 0 8px;
-        color: #ffffff;
-    }
-
-    .welcome p {
-        margin: 0;
-        color: #aeb1b7;
-    }
-
-    /* =========================
-       PUBLICATION
-       ========================= */
-
-    .post-box {
-        background: #18191c;
-        border: 1px solid #2b2d31;
-        border-radius: 10px;
-
-        padding: 18px;
-        margin-bottom: 20px;
-    }
-
-    .post-box textarea {
-        width: 100%;
-        min-height: 90px;
-
-        resize: vertical;
-
-        background: #111214;
-        color: #ffffff;
-
-        border: 1px solid #303238;
-        border-radius: 7px;
-
-        padding: 12px;
-
-        font-family: Arial, sans-serif;
-        font-size: 15px;
-
-        outline: none;
-    }
-
-    .post-box textarea:focus {
-        border-color: #555963;
-    }
-
-    .post-button {
-        margin-top: 10px;
-
-        background: #ffffff;
-        color: #111214;
-
-        border: none;
-        border-radius: 7px;
-
-        padding: 10px 18px;
-
-        font-size: 15px;
-        font-weight: bold;
-
-        cursor: pointer;
-    }
-
-    .post-button:hover {
-        background: #dcdcdc;
-    }
-
-    /* =========================
-       PUBLICATIONS
-       ========================= */
-
-    .post {
-        background: #18191c;
-        border: 1px solid #2b2d31;
-        border-radius: 10px;
-
-        padding: 18px;
-        margin-bottom: 15px;
-    }
-
-    .post-author {
-        font-weight: bold;
-        color: #ffffff;
-
-        margin-bottom: 8px;
-    }
-
-    .post-content {
-        color: #d0d2d6;
-        line-height: 1.5;
-
-        white-space: pre-wrap;
-        word-break: break-word;
-    }
-
-    .post-actions {
-        margin-top: 15px;
-        padding-top: 12px;
-
-        border-top: 1px solid #2b2d31;
-    }
-
-    .post-action {
-        background: transparent;
-        border: none;
-
-        color: #8f9299;
-
-        cursor: pointer;
-        font-size: 14px;
-
-        padding: 5px 0;
-    }
-
-    .post-action:hover {
-        color: #ffffff;
-    }
-
-    /* =========================
-       CHAT
-       ========================= */
-
-    .chat-container {
-        height: calc(100vh - 130px);
-
-        background: #18191c;
-        border: 1px solid #2b2d31;
-        border-radius: 10px;
-
-        display: flex;
-        flex-direction: column;
-    }
-
-    #messages {
-        flex: 1;
-        overflow-y: auto;
-
-        padding: 20px;
-    }
-
-    .message {
-        background: #222428;
-
-        padding: 10px 12px;
-        margin-bottom: 10px;
-
-        border-radius: 7px;
-    }
-
-    .username {
-        font-weight: bold;
-        color: #ffffff;
-
-        margin-bottom: 5px;
-    }
-
-    .message-text {
-        color: #d0d2d6;
-        word-break: break-word;
-    }
-
-    .chat-form {
-        display: flex;
-
-        padding: 15px;
-
-        border-top: 1px solid #2b2d31;
-        gap: 10px;
-    }
-
-    #messageInput {
-        flex: 1;
-
-        background: #111214;
-        color: #ffffff;
-
-        border: 1px solid #303238;
-        border-radius: 7px;
-
-        padding: 12px;
-
-        font-size: 15px;
-        outline: none;
-    }
-
-    #messageInput:focus {
-        border-color: #555963;
-    }
-
-    .send-button {
-        background: #ffffff;
-        color: #111214;
-
-        border: none;
-        border-radius: 7px;
-
-        padding: 0 20px;
-
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .send-button:hover {
-        background: #dcdcdc;
-    }
-
-    /* =========================
-       PROFIL
-       ========================= */
-
-    .profile-card {
-        background: #18191c;
-        border: 1px solid #2b2d31;
-        border-radius: 10px;
-
-        padding: 25px;
-    }
-
-    .profile-name {
-        font-size: 24px;
-        font-weight: bold;
-
-        color: #ffffff;
-
-        margin-bottom: 8px;
-    }
-
-    .profile-info {
-        color: #9699a0;
+        overflow: hidden;
     }
 
     /* =========================
@@ -384,7 +58,7 @@
         margin: 0 0 8px;
 
         color: #ffffff;
-        font-size: 26px;
+        font-size: 28px;
     }
 
     .login-box p {
@@ -435,31 +109,266 @@
     }
 
     /* =========================
+       APPLICATION
+       ========================= */
+
+    #app {
+        display: none;
+
+        height: 100vh;
+        width: 100%;
+    }
+
+    /* =========================
+       BARRE DU HAUT
+       ========================= */
+
+    .topbar {
+        height: 64px;
+
+        background: #18191c;
+        border-bottom: 1px solid #2b2d31;
+
+        display: flex;
+        align-items: center;
+
+        padding: 0 22px;
+    }
+
+    .logo {
+        color: #ffffff;
+
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    /* =========================
+       BARRE LATÉRALE
+       ========================= */
+
+    .sidebar {
+        width: 230px;
+
+        background: #18191c;
+        border-right: 1px solid #2b2d31;
+
+        padding: 22px 14px;
+
+        flex-shrink: 0;
+    }
+
+    .sidebar-title {
+        color: #777a82;
+
+        font-size: 12px;
+        font-weight: bold;
+
+        letter-spacing: 1px;
+
+        margin: 0 10px 10px;
+    }
+
+    .room-button {
+        width: 100%;
+
+        display: block;
+
+        background: transparent;
+        color: #aeb1b7;
+
+        border: none;
+        border-radius: 7px;
+
+        padding: 11px 12px;
+
+        margin-bottom: 4px;
+
+        text-align: left;
+
+        font-size: 15px;
+
+        cursor: pointer;
+    }
+
+    .room-button:hover {
+        background: #25272b;
+        color: #ffffff;
+    }
+
+    .room-button.active {
+        background: #2b2e34;
+        color: #ffffff;
+    }
+
+    .separator {
+        height: 1px;
+
+        background: #2b2d31;
+
+        margin: 18px 8px;
+    }
+
+    /* =========================
+       ZONE PRINCIPALE
+       ========================= */
+
+    .main {
+        flex: 1;
+
+        min-width: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        background: #111214;
+    }
+
+    .room-header {
+        height: 64px;
+
+        display: flex;
+        align-items: center;
+
+        padding: 0 24px;
+
+        background: #18191c;
+        border-bottom: 1px solid #2b2d31;
+    }
+
+    .room-title {
+        color: #ffffff;
+
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    /* =========================
+       MESSAGES
+       ========================= */
+
+    #messages {
+        flex: 1;
+
+        overflow-y: auto;
+
+        padding: 22px;
+    }
+
+    .message {
+        margin-bottom: 16px;
+    }
+
+    .username {
+        color: #ffffff;
+
+        font-size: 14px;
+        font-weight: bold;
+
+        margin-bottom: 4px;
+    }
+
+    .message-text {
+        color: #d0d2d6;
+
+        font-size: 15px;
+
+        line-height: 1.45;
+
+        word-break: break-word;
+    }
+
+    /* =========================
+       ZONE D'ÉCRITURE
+       ========================= */
+
+    .chat-form {
+        display: flex;
+
+        gap: 10px;
+
+        padding: 15px 20px;
+
+        background: #18191c;
+        border-top: 1px solid #2b2d31;
+    }
+
+    #messageInput {
+        flex: 1;
+
+        background: #111214;
+        color: #ffffff;
+
+        border: 1px solid #303238;
+        border-radius: 7px;
+
+        padding: 12px;
+
+        font-size: 15px;
+
+        outline: none;
+    }
+
+    #messageInput:focus {
+        border-color: #555963;
+    }
+
+    .send-button {
+        background: #ffffff;
+        color: #111214;
+
+        border: none;
+        border-radius: 7px;
+
+        padding: 0 20px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+
+    .send-button:hover {
+        background: #dcdcdc;
+    }
+
+    /* =========================
+       STRUCTURE
+       ========================= */
+
+    .content {
+        display: flex;
+
+        height: calc(100vh - 64px);
+    }
+
+    /* =========================
        MOBILE
        ========================= */
 
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
 
-        .navbar {
-            padding: 0 12px;
+        .sidebar {
+            width: 170px;
+            padding: 15px 8px;
         }
 
-        .logo {
-            font-size: 18px;
+        .topbar {
+            padding: 0 15px;
         }
 
-        .nav-button {
-            padding: 9px;
-            font-size: 13px;
+        .room-header {
+            padding: 0 15px;
         }
 
-        .page {
-            padding-left: 10px;
-            padding-right: 10px;
+        #messages {
+            padding: 15px;
         }
 
-        .chat-container {
-            height: calc(100vh - 110px);
+        .chat-form {
+            padding: 10px;
+        }
+
+        .send-button {
+            padding: 0 14px;
         }
 
     }
@@ -487,8 +396,8 @@
         <input
             id="usernameInput"
             type="text"
-            placeholder="Ton pseudo"
             maxlength="20"
+            placeholder="Ton pseudo"
             autocomplete="off"
         >
 
@@ -502,140 +411,136 @@
 
 
 <!-- =========================
-     NAVIGATION
+     APPLICATION
      ========================= -->
 
-<nav class="navbar">
+<div id="app">
 
-    <div class="logo">
-        Blocus.net
-    </div>
+    <!-- BARRE DU HAUT -->
 
-    <div class="nav-links">
+    <header class="topbar">
 
-        <button class="nav-button active" data-section="home">
-            Accueil
-        </button>
-
-        <button class="nav-button" data-section="chat">
-            Chat
-        </button>
-
-        <button class="nav-button" data-section="profile">
-            Profil
-        </button>
-
-    </div>
-
-</nav>
-
-
-<!-- =========================
-     CONTENU
-     ========================= -->
-
-<main class="page">
-
-
-    <!-- ACCUEIL -->
-
-    <section id="home" class="section active">
-
-        <h1 class="section-title">
-            Accueil
-        </h1>
-
-        <div class="welcome">
-
-            <h2>
-                Bienvenue sur Blocus.net
-            </h2>
-
-            <p>
-                Le réseau social de Blocus.
-            </p>
-
+        <div class="logo">
+            Blocus.net
         </div>
 
+    </header>
 
-        <div class="post-box">
 
-            <textarea
-                id="postInput"
-                maxlength="1000"
-                placeholder="Quoi de neuf ?"
-            ></textarea>
+    <div class="content">
 
-            <button class="post-button" id="postButton">
-                Publier
+
+        <!-- =========================
+             SALONS
+             ========================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-title">
+                SALONS
+            </div>
+
+
+            <button
+                class="room-button active"
+                data-room="general"
+            >
+                Général
             </button>
 
-        </div>
+
+            <button
+                class="room-button"
+                data-room="lycee-a"
+            >
+                Lycée A
+            </button>
 
 
-        <div id="posts">
+            <button
+                class="room-button"
+                data-room="lycee-b"
+            >
+                Lycée B
+            </button>
 
-        </div>
 
-    </section>
+            <button
+                class="room-button"
+                data-room="lycee-c"
+            >
+                Lycée C
+            </button>
 
 
-    <!-- CHAT -->
+            <div class="separator"></div>
 
-    <section id="chat" class="section">
 
-        <h1 class="section-title">
-            Chat
-        </h1>
+            <div class="sidebar-title">
+                INFORMATIONS
+            </div>
 
-        <div class="chat-container">
+
+            <button
+                class="room-button"
+                data-room="actualites"
+            >
+                Actualités
+            </button>
+
+        </aside>
+
+
+        <!-- =========================
+             CHAT
+             ========================= -->
+
+        <main class="main">
+
+
+            <div class="room-header">
+
+                <div
+                    class="room-title"
+                    id="roomTitle"
+                >
+                    Général
+                </div>
+
+            </div>
+
 
             <div id="messages"></div>
 
-            <form class="chat-form" id="form">
+
+            <form
+                class="chat-form"
+                id="form"
+            >
 
                 <input
                     id="messageInput"
                     type="text"
-                    placeholder="Écris un message..."
+                    maxlength="500"
+                    placeholder="Écrire un message..."
                     autocomplete="off"
                 >
 
-                <button class="send-button" type="submit">
+                <button
+                    class="send-button"
+                    type="submit"
+                >
                     Envoyer
                 </button>
 
             </form>
 
-        </div>
 
-    </section>
+        </main>
 
+    </div>
 
-    <!-- PROFIL -->
-
-    <section id="profile" class="section">
-
-        <h1 class="section-title">
-            Profil
-        </h1>
-
-        <div class="profile-card">
-
-            <div class="profile-name" id="profileName">
-                Utilisateur
-            </div>
-
-            <div class="profile-info">
-                Profil Blocus.net
-            </div>
-
-        </div>
-
-    </section>
-
-
-</main>
+</div>
 
 
 <!-- Socket.IO -->
@@ -646,7 +551,7 @@
 <script>
 
     // =========================
-    // CONNEXION SOCKET.IO
+    // SOCKET.IO
     // =========================
 
     const socket = io();
@@ -658,26 +563,56 @@
 
     const login = document.getElementById("login");
 
-    const usernameInput = document.getElementById("usernameInput");
+    const app = document.getElementById("app");
 
-    const loginButton = document.getElementById("loginButton");
+    const usernameInput =
+        document.getElementById("usernameInput");
 
-    const profileName = document.getElementById("profileName");
+    const loginButton =
+        document.getElementById("loginButton");
 
-    const form = document.getElementById("form");
+    const form =
+        document.getElementById("form");
 
-    const messageInput = document.getElementById("messageInput");
+    const messageInput =
+        document.getElementById("messageInput");
 
-    const messages = document.getElementById("messages");
+    const messages =
+        document.getElementById("messages");
 
-    const postInput = document.getElementById("postInput");
+    const roomTitle =
+        document.getElementById("roomTitle");
 
-    const postButton = document.getElementById("postButton");
+    const roomButtons =
+        document.querySelectorAll(".room-button");
 
-    const posts = document.getElementById("posts");
 
+    // =========================
+    // VARIABLES
+    // =========================
 
     let username = "";
+
+    let currentRoom = "general";
+
+
+    // =========================
+    // NOM DES SALONS
+    // =========================
+
+    const roomNames = {
+
+        "general": "Général",
+
+        "lycee-a": "Lycée A",
+
+        "lycee-b": "Lycée B",
+
+        "lycee-c": "Lycée C",
+
+        "actualites": "Actualités"
+
+    };
 
 
     // =========================
@@ -686,7 +621,9 @@
 
     loginButton.addEventListener("click", () => {
 
-        const value = usernameInput.value.trim();
+        const value =
+            usernameInput.value.trim();
+
 
         if (value === "") {
 
@@ -696,202 +633,228 @@
 
         }
 
+
         username = value;
 
-        socket.emit("set username", username);
 
-        profileName.textContent = username;
+        socket.emit(
+            "set username",
+            username
+        );
+
 
         login.style.display = "none";
 
-        messageInput.focus();
+        app.style.display = "block";
+
+
+        // Rejoindre le salon Général
+
+        joinRoom("general");
 
     });
 
 
-    usernameInput.addEventListener("keydown", (event) => {
+    // Entrée dans le champ pseudo
 
-        if (event.key === "Enter") {
+    usernameInput.addEventListener(
+        "keydown",
+        (event) => {
 
-            loginButton.click();
+            if (event.key === "Enter") {
+
+                loginButton.click();
+
+            }
+
+        }
+    );
+
+
+    // =========================
+    // CHANGER DE SALON
+    // =========================
+
+    roomButtons.forEach((button) => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const room =
+                    button.dataset.room;
+
+                joinRoom(room);
+
+            }
+        );
+
+    });
+
+
+    function joinRoom(room) {
+
+        currentRoom = room;
+
+
+        // Informer le serveur
+
+        socket.emit(
+            "join room",
+            room
+        );
+
+
+        // Changer le titre
+
+        roomTitle.textContent =
+            roomNames[room];
+
+
+        // Vider les anciens messages
+
+        messages.innerHTML = "";
+
+
+        // Modifier le bouton actif
+
+        roomButtons.forEach(
+            (button) => {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        const activeButton =
+            document.querySelector(
+                `[data-room="${room}"]`
+            );
+
+
+        if (activeButton) {
+
+            activeButton.classList.add(
+                "active"
+            );
 
         }
 
-    });
+
+        messageInput.focus();
+
+    }
 
 
     // =========================
-    // NAVIGATION
+    // ENVOYER UN MESSAGE
     // =========================
 
-    const navButtons = document.querySelectorAll(".nav-button");
+    form.addEventListener(
+        "submit",
+        (event) => {
 
-    const sections = document.querySelectorAll(".section");
-
-
-    navButtons.forEach((button) => {
-
-        button.addEventListener("click", () => {
-
-            const target = button.dataset.section;
+            event.preventDefault();
 
 
-            navButtons.forEach((item) => {
-
-                item.classList.remove("active");
-
-            });
+            const message =
+                messageInput.value.trim();
 
 
-            sections.forEach((section) => {
+            if (message === "") {
 
-                section.classList.remove("active");
+                return;
 
-            });
-
-
-            button.classList.add("active");
-
-            document.getElementById(target).classList.add("active");
-
-        });
-
-    });
+            }
 
 
-    // =========================
-    // CHAT
-    // =========================
+            socket.emit(
+                "chat message",
+                message
+            );
 
-    form.addEventListener("submit", (event) => {
-
-        event.preventDefault();
-
-
-        const message = messageInput.value.trim();
-
-
-        if (message !== "") {
-
-            socket.emit("chat message", message);
 
             messageInput.value = "";
 
+            messageInput.focus();
+
         }
-
-    });
-
-
-    socket.on("chat message", (data) => {
-
-        const messageElement = document.createElement("div");
-
-        messageElement.classList.add("message");
-
-
-        const usernameElement = document.createElement("div");
-
-        usernameElement.classList.add("username");
-
-        usernameElement.textContent = data.username;
-
-
-        const textElement = document.createElement("div");
-
-        textElement.classList.add("message-text");
-
-        textElement.textContent = data.message;
-
-
-        messageElement.appendChild(usernameElement);
-
-        messageElement.appendChild(textElement);
-
-
-        messages.appendChild(messageElement);
-
-
-        messages.scrollTop = messages.scrollHeight;
-
-    });
+    );
 
 
     // =========================
-    // PUBLICATIONS
+    // RECEVOIR UN MESSAGE
     // =========================
 
-    postButton.addEventListener("click", () => {
+    socket.on(
+        "chat message",
+        (data) => {
 
-        const content = postInput.value.trim();
+
+            // Ne pas afficher un message
+            // d'un autre salon
+
+            if (data.room !== currentRoom) {
+
+                return;
+
+            }
 
 
-        if (content === "") {
+            const messageElement =
+                document.createElement("div");
 
-            return;
+            messageElement.classList.add(
+                "message"
+            );
+
+
+            const usernameElement =
+                document.createElement("div");
+
+            usernameElement.classList.add(
+                "username"
+            );
+
+            usernameElement.textContent =
+                data.username;
+
+
+            const textElement =
+                document.createElement("div");
+
+            textElement.classList.add(
+                "message-text"
+            );
+
+            textElement.textContent =
+                data.message;
+
+
+            messageElement.appendChild(
+                usernameElement
+            );
+
+            messageElement.appendChild(
+                textElement
+            );
+
+
+            messages.appendChild(
+                messageElement
+            );
+
+
+            // Descendre automatiquement
+
+            messages.scrollTop =
+                messages.scrollHeight;
 
         }
-
-
-        const post = document.createElement("div");
-
-        post.classList.add("post");
-
-
-        const author = document.createElement("div");
-
-        author.classList.add("post-author");
-
-        author.textContent = username;
-
-
-        const text = document.createElement("div");
-
-        text.classList.add("post-content");
-
-        text.textContent = content;
-
-
-        const actions = document.createElement("div");
-
-        actions.classList.add("post-actions");
-
-
-        const likeButton = document.createElement("button");
-
-        likeButton.classList.add("post-action");
-
-        likeButton.textContent = "J'aime";
-
-
-        let liked = false;
-
-
-        likeButton.addEventListener("click", () => {
-
-            liked = !liked;
-
-            likeButton.textContent = liked ? "Je n'aime plus" : "J'aime";
-
-        });
-
-
-        actions.appendChild(likeButton);
-
-
-        post.appendChild(author);
-
-        post.appendChild(text);
-
-        post.appendChild(actions);
-
-
-        posts.prepend(post);
-
-
-        postInput.value = "";
-
-    });
-
+    );
 
 </script>
 ```
