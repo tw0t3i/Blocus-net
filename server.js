@@ -55,6 +55,12 @@ const actualites = [
         content: "Les salons publics sont maintenant disponibles.",
         date: "6 octobre 2026"
     }
+
+    {
+        title: "Compteur de personnes en lignes",
+        content: "Un compteur qui indique le nombres de personnes en lignes et leurs pseudo",
+        date: "7 octobre 2026"
+    }
 ];
 
 
