@@ -140,6 +140,10 @@ utilisateursConnectes.set(
     username
 );
 
+socket.emit(
+    "username accepted"
+);
+        
 console.log(
     username + " a rejoint Blocus."
 );
