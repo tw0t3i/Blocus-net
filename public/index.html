@@ -960,6 +960,25 @@
 
 }
 
+       document.querySelectorAll(".room-button").forEach((button) => {
+
+    button.classList.remove("active");
+
+});
+
+const activeButton =
+    document.querySelector(
+        `[data-room="${room}"]`
+    );
+
+if (activeButton) {
+
+    activeButton.classList.add("active");
+
+}
+
+}
+
         // Informer le serveur
 
         socket.emit(
