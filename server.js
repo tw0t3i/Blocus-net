@@ -4,7 +4,10 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    // Autorise l'envoi d'images (environ 2 Mo par message)
+    maxHttpBufferSize: 2e6
+});
 
 
 // =========================
@@ -37,6 +40,16 @@ const messagesParSalon = {
     "lycee-b": [],
     "lycee-c": []
 };
+
+// Identifiant unique pour chaque message (sert aux réponses)
+let prochainIdMessage = 1;
+
+// Taille maximale d'une image (en caractères base64, ~500 Ko)
+const TAILLE_MAX_IMAGE = 700000;
+
+// Formats d'image autorisés (pas de SVG : risque de sécurité)
+const REGEX_IMAGE =
+    /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/;
 
 
 // =========================
@@ -227,7 +240,7 @@ io.emit(
     // ENVOYER UN MESSAGE
     // =========================
 
-    socket.on("chat message", (message) => {
+    socket.on("chat message", (payload) => {
 
         if (!socket.username) {
             return;
@@ -246,21 +259,82 @@ io.emit(
         }
 
 
-        if (typeof message !== "string") {
+        // Compatibilité : ancien format (texte seul)
+
+        if (typeof payload === "string") {
+            payload = { message: payload };
+        }
+
+        if (!payload || typeof payload !== "object") {
             return;
         }
 
+
+        // ----- Texte -----
+
+        let message = payload.message;
+
+        if (typeof message !== "string") {
+            message = "";
+        }
 
         message = message.trim();
 
+        if (message.length > 500) {
+            message = message.substring(0, 500);
+        }
 
-        if (message === "") {
+
+        // ----- Image -----
+
+        let image = null;
+
+        if (payload.image !== undefined && payload.image !== null) {
+
+            if (
+                typeof payload.image !== "string" ||
+                payload.image.length > TAILLE_MAX_IMAGE ||
+                !REGEX_IMAGE.test(payload.image)
+            ) {
+                socket.emit("message error", "Image invalide ou trop lourde.");
+                return;
+            }
+
+            image = payload.image;
+        }
+
+
+        // Il faut au moins du texte ou une image
+
+        if (message === "" && image === null) {
             return;
         }
 
 
-        if (message.length > 500) {
-            message = message.substring(0, 500);
+        const historique = messagesParSalon[socket.currentRoom];
+
+
+        // ----- Réponse à un message -----
+
+        let replyTo = null;
+
+        if (payload.replyTo !== undefined && payload.replyTo !== null) {
+
+            const original = historique.find(
+                (m) => m.id === payload.replyTo
+            );
+
+            if (original) {
+
+                replyTo = {
+                    id: original.id,
+                    username: original.username,
+                    message: original.message.substring(0, 100),
+                    hasImage: original.image !== null
+                };
+
+            }
+
         }
 
 
@@ -268,9 +342,15 @@ io.emit(
 
         const nouveauMessage = {
 
+            id: prochainIdMessage++,
+
             username: socket.username,
 
             message: message,
+
+            image: image,
+
+            replyTo: replyTo,
 
             room: socket.currentRoom
 
@@ -279,18 +359,14 @@ io.emit(
 
         // Sauvegarder le message
 
-        messagesParSalon[socket.currentRoom].push(
-            nouveauMessage
-        );
+        historique.push(nouveauMessage);
 
 
         // Maximum 200 messages par salon
 
-        if (
-            messagesParSalon[socket.currentRoom].length > 200
-        ) {
+        if (historique.length > 200) {
 
-            messagesParSalon[socket.currentRoom].shift();
+            historique.shift();
 
         }
 
