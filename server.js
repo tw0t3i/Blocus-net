@@ -82,9 +82,8 @@ io.on("connection", (socket) => {
 
 
     console.log(
-        "Nouvelle connexion. Utilisateurs en ligne : " +
-        utilisateursEnLigne
-    );
+    "Nouvelle connexion."
+);
 
 
     
@@ -329,10 +328,9 @@ io.emit(
     Array.from(utilisateursConnectes.values())
 );
         
-        console.log(
-            "Déconnexion. Utilisateurs en ligne : " +
-            utilisateursEnLigne
-        );
+       console.log(
+    "Déconnexion."
+);
 
 
         // Mettre à jour le compteur
