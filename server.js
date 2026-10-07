@@ -68,7 +68,6 @@ const actualites = [
 // UTILISATEURS EN LIGNE
 // =========================
 
-let utilisateursEnLigne = 0;
 
 const utilisateursConnectes = new Map();
 
@@ -79,7 +78,7 @@ const utilisateursConnectes = new Map();
 
 io.on("connection", (socket) => {
 
-    utilisateursEnLigne++;
+
 
 
     console.log(
@@ -88,10 +87,7 @@ io.on("connection", (socket) => {
     );
 
 
-    io.emit(
-        "online count",
-        utilisateursEnLigne
-    );
+    
 
 
     // =========================
@@ -151,6 +147,11 @@ console.log(
 io.emit(
     "online users",
     Array.from(utilisateursConnectes.values())
+);
+
+    io.emit(
+    "online count",
+    utilisateursConnectes.size
 );
 
     });
@@ -311,13 +312,7 @@ io.emit(
 
     socket.on("disconnect", () => {
 
-        utilisateursEnLigne--;
-
-
-        if (utilisateursEnLigne < 0) {
-            utilisateursEnLigne = 0;
-        }
-
+        
 
         // Retirer le pseudo
 
@@ -329,6 +324,11 @@ io.emit(
 
 }
 
+        io.emit(
+    "online users",
+    Array.from(utilisateursConnectes.values())
+);
+        
         console.log(
             "Déconnexion. Utilisateurs en ligne : " +
             utilisateursEnLigne
@@ -338,9 +338,9 @@ io.emit(
         // Mettre à jour le compteur
 
         io.emit(
-            "online count",
-            utilisateursEnLigne
-        );
+    "online count",
+    utilisateursConnectes.size
+);
 
 
         // Mettre à jour la liste
