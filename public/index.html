@@ -938,82 +938,78 @@
 
     function joinRoom(room) {
 
-        currentRoom = room;
+    currentRoom = room;
 
-       if (room === "actualites") {
+    if (room === "actualites") {
 
-    messages.style.display = "none";
+        messages.style.display = "none";
 
-    actualitesContainer.style.display = "block";
+        actualitesContainer.style.display = "block";
 
-    form.style.display = "none";
+        form.style.display = "none";
 
-    socket.emit("get actualites");
+        socket.emit("get actualites");
 
-} else {
+    } else {
 
-    messages.style.display = "block";
+        messages.style.display = "block";
 
-    actualitesContainer.style.display = "none";
+        actualitesContainer.style.display = "none";
 
-    form.style.display = "flex";
+        form.style.display = "flex";
 
-}
+    }
 
-       messageInput.focus();
+    // Informer le serveur
 
-}
-       
-        // Informer le serveur
-
-        socket.emit(
-            "join room",
-            room
-        );
+    socket.emit(
+        "join room",
+        room
+    );
 
 
-        // Changer le titre
+    // Changer le titre
 
-        roomTitle.textContent =
-            roomNames[room];
-
-
-        // Vider les anciens messages
-
-        messages.innerHTML = "";
+    roomTitle.textContent =
+        roomNames[room];
 
 
-        // Modifier le bouton actif
+    // Vider les anciens messages
 
-        roomButtons.forEach(
-            (button) => {
-
-                button.classList.remove(
-                    "active"
-                );
-
-            }
-        );
+    messages.innerHTML = "";
 
 
-        const activeButton =
-            document.querySelector(
-                `[data-room="${room}"]`
-            );
+    // Modifier le bouton actif
 
+    roomButtons.forEach(
+        (button) => {
 
-        if (activeButton) {
-
-            activeButton.classList.add(
+            button.classList.remove(
                 "active"
             );
 
         }
-   
-messageInput.focus();
+    );
+
+
+    const activeButton =
+        document.querySelector(
+            `[data-room="${room}"]`
+        );
+
+
+    if (activeButton) {
+
+        activeButton.classList.add(
+            "active"
+        );
+
+    }
+
+
+    messageInput.focus();
 
 }
-
 
     // =========================
     // ENVOYER UN MESSAGE
