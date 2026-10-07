@@ -861,6 +861,28 @@
 
 });
 
+   socket.on("username accepted", () => {
+
+    login.style.display = "none";
+
+    app.style.display = "block";
+
+    joinRoom("general");
+
+});
+
+   socket.on("username taken", () => {
+
+    alert(
+        "Ce pseudo est déjà utilisé par une personne en ligne."
+    );
+
+    usernameInput.focus();
+
+    usernameInput.select();
+
+});
+
 
     // Entrée dans le champ pseudo
 
@@ -909,6 +931,8 @@
 
     actualitesContainer.style.display = "block";
 
+    form.style.display = "none";
+
     socket.emit("get actualites");
 
 } else {
@@ -916,6 +940,8 @@
     messages.style.display = "block";
 
     actualitesContainer.style.display = "none";
+
+    form.style.display = "flex";
 
 }
 
