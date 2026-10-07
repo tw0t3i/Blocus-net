@@ -960,25 +960,10 @@
 
 }
 
-       document.querySelectorAll(".room-button").forEach((button) => {
-
-    button.classList.remove("active");
-
-});
-
-const activeButton =
-    document.querySelector(
-        `[data-room="${room}"]`
-    );
-
-if (activeButton) {
-
-    activeButton.classList.add("active");
+       messageInput.focus();
 
 }
-
-}
-
+       
         // Informer le serveur
 
         socket.emit(
@@ -1024,7 +1009,10 @@ if (activeButton) {
             );
 
         }
+   
+messageInput.focus();
 
+}
 
 
     // =========================
