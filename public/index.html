@@ -836,40 +836,30 @@
     // CONNEXION
     // =========================
 
-    loginButton.addEventListener("click", () => {
+  loginButton.addEventListener("click", () => {
 
-        const value =
-            usernameInput.value.trim();
-
-
-        if (value === "") {
-
-            alert("Choisis un pseudo.");
-
-            return;
-
-        }
+    const value =
+        usernameInput.value.trim();
 
 
-        username = value;
+    if (value === "") {
+
+        alert("Choisis un pseudo.");
+
+        return;
+
+    }
 
 
-        socket.emit(
-            "set username",
-            username
-        );
+    username = value;
 
 
-        login.style.display = "none";
+    socket.emit(
+        "set username",
+        username
+    );
 
-        app.style.display = "block";
-
-
-        // Rejoindre le salon Général
-
-        joinRoom("general");
-
-    });
+});
 
 
     // Entrée dans le champ pseudo
