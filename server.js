@@ -70,7 +70,7 @@ const actualites = [
 
 let utilisateursEnLigne = 0;
 
-const utilisateursConnectes = new Set();
+const utilisateursConnectes = new Map();
 
 
 // =========================
@@ -120,19 +120,19 @@ io.on("connection", (socket) => {
 
         socket.username = username;
 
+utilisateursConnectes.set(
+    socket.id,
+    username
+);
 
-        utilisateursConnectes.add(username);
+console.log(
+    username + " a rejoint Blocus."
+);
 
-
-        console.log(
-            username + " a rejoint Blocus."
-        );
-
-
-        io.emit(
-            "online users",
-            Array.from(utilisateursConnectes)
-        );
+io.emit(
+    "online users",
+    Array.from(utilisateursConnectes.values())
+);
 
     });
 
@@ -304,12 +304,11 @@ io.on("connection", (socket) => {
 
         if (socket.username) {
 
-            utilisateursConnectes.delete(
-                socket.username
-            );
+    utilisateursConnectes.delete(
+        socket.id
+    );
 
-        }
-
+}
 
         console.log(
             "Déconnexion. Utilisateurs en ligne : " +
@@ -329,7 +328,7 @@ io.on("connection", (socket) => {
 
         io.emit(
             "online users",
-            Array.from(utilisateursConnectes)
+            Array.from(utilisateursConnectes.values())
         );
 
     });
