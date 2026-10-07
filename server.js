@@ -54,7 +54,7 @@ const actualites = [
         title: "Nouveau système de salons",
         content: "Les salons publics sont maintenant disponibles.",
         date: "6 octobre 2026"
-    }
+    },
 
     {
         title: "Compteur de personnes en lignes",
