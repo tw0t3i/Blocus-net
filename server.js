@@ -117,6 +117,21 @@ io.on("connection", (socket) => {
             username = username.substring(0, 20);
         }
 
+        if (
+    Array.from(utilisateursConnectes.values())
+        .some(
+            (pseudo) =>
+                pseudo.toLowerCase() === username.toLowerCase()
+        )
+) {
+
+    socket.emit(
+        "username taken"
+    );
+
+    return;
+}
+
 
         socket.username = username;
 
